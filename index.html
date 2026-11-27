@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COCHELIN Raphaël — Portfolio</title>
+
+  <!-- Le fichier CSS contient tous les styles, dont l'arrière-plan -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== FILIGRANE "CND" EN ARRIÈRE-PLAN ===== -->
+  <div class="watermark" aria-hidden="true">CND</div>
+
+  <!-- ===== EN-TÊTE / NAVIGATION =====
+       Structure basée sur la trame du portfolio :
+       Accueil / Épreuves / Atelier pro / Veille,
+       + tes idées : Présentation, Ma mission, Outils.
+       Les menus déroulants s'ouvrent au survol de la souris. -->
+  <header class="site-header">
+    <div class="logo">
+      <a href="#" class="logo-link" data-view="accueil">COCHELIN Raphaël</a>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+
+        <li><a href="#" data-view="accueil">Accueil</a></li>
+
+        <!-- Présentation (trame : bloc Accueil) : candidat, BTS SIO, CV, entreprise, école, certifications -->
+        <li class="nav-item">
+          <span class="nav-titre">Présentation</span>
+          <ul class="nav-dropdown">
+            <li><a href="#" data-view="presentation-candidat">Le candidat</a></li>
+            <li><a href="#" data-view="presentation-bts-sio">Le BTS SIO</a></li>
+            <li><a href="#" data-view="presentation-cv">Mon CV</a></li>
+            <li><a href="#" data-view="presentation-entreprise">Entreprise</a></li>
+            <li><a href="#" data-view="presentation-ecole">École</a></li>
+            <li><a href="#" data-view="presentation-certifications">Certifications</a></li>
+          </ul>
+        </li>
+
+        <!-- Idée de Raphaël : Ma mission (= "rôle dans l'entreprise" de la trame) -->
+        <li><a href="#" data-view="ma-mission">Ma mission</a></li>
+
+        <!-- Épreuves (trame) : E5 et E6 -->
+        <li class="nav-item">
+          <span class="nav-titre">Épreuves</span>
+          <ul class="nav-dropdown">
+            <li><a href="#" data-view="epreuve-e5">E5 — Tableau de synthèse</a></li>
+            <li><a href="#" data-view="epreuve-e6-reseau">E6 — Situation 1 : Réseau</a></li>
+            <li><a href="#" data-view="epreuve-e6-systeme">E6 — Situation 2 : Système</a></li>
+          </ul>
+        </li>
+
+        <!-- Atelier pro (trame) : A1 à A4 -->
+        <li class="nav-item">
+          <span class="nav-titre">Atelier pro</span>
+          <ul class="nav-dropdown">
+            <li><a href="#" data-view="atelier-a1-ad">A1 — Projet AD</a></li>
+            <li><a href="#" data-view="atelier-a2-glpi">A2 — Projet GLPI</a></li>
+            <li><a href="#" data-view="atelier-a3-cyber">A3 — Projet Cyber</a></li>
+            <li><a href="#" data-view="atelier-a4-cisco">A4 — Projet Cisco</a></li>
+          </ul>
+        </li>
+
+        <!-- Outils : idée de Raphaël, gardée (menus en cascade au survol) -->
+        <li class="nav-item">
+          <span class="nav-titre">Outils</span>
+          <ul class="nav-dropdown">
+            <li class="nav-item">
+              <a href="#" class="nav-titre" data-view="outil-active-directory">Active Directory</a>
+              <ul class="nav-dropdown nav-dropdown--sous">
+                <li>Sous-outil à préciser</li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-titre" data-view="outil-mecm">MECM</a>
+              <ul class="nav-dropdown nav-dropdown--sous">
+                <li>Sous-outil à préciser</li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-titre" data-view="outil-mcm">MCM</a>
+              <ul class="nav-dropdown nav-dropdown--sous">
+                <li>Sous-outil à préciser</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Veille technologique / juridique (trame) -->
+        <li class="nav-item">
+          <span class="nav-titre">Veille</span>
+          <ul class="nav-dropdown">
+            <li><a href="#" data-view="veille-cybersecurite">Cybersécurité</a></li>
+          </ul>
+        </li>
+
+        <!-- Contact : formulaire qui envoie un e-mail à Raphaël -->
+        <li><a href="#" data-view="contact">Contact</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== VUES DE LA PAGE =====
+       Une seule vue est visible à la fois (classe "vue-active").
+       Le script.js affiche la bonne vue au clic sur un lien du
+       menu, sans recharger la page ni ouvrir de nouveau lien. -->
+
+  <!-- ======== ACCUEIL (visible par défaut) ======== -->
+  <section id="accueil" class="vue hero vue-active">
+    <h1>Bonjour, je suis <span class="highlight">COCHELIN Raphaël</span></h1>
+    <p>Élève en BTS SIO — bienvenue sur mon portfolio.</p>
+  </section>
+
+  <!-- ======== PRÉSENTATION ======== -->
+
+  <section id="presentation-candidat" class="vue page-outil">
+    <h1>Présentation du candidat</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="presentation-bts-sio" class="vue page-outil">
+    <h1>Présentation du BTS SIO</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="presentation-cv" class="vue page-outil page-cv">
+    <h1>Mon CV</h1>
+
+    <!-- Bouton de téléchargement : le fichier PDF doit se trouver
+         dans le même dossier que index.html -->
+    <div class="cv-actions">
+      <a href="CV_Cochelin_Raphael.pdf" download="CV_Cochelin_Raphael.pdf" class="bouton-telecharger">
+        ↓ Télécharger mon CV (PDF)
+      </a>
+    </div>
+
+    <div class="cv">
+
+      <!-- ---- En-tête : identité et contact ---- -->
+      <div class="cv-carte cv-entete">
+        <div>
+          <h2 class="cv-nom">Cochelin Raphaël</h2>
+          <p class="cv-titre">Élève en BTS SIO</p>
+        </div>
+        <ul class="cv-contact">
+          <li><a href="mailto:raphael.cochelin1@gmail.com">raphael.cochelin1@gmail.com</a></li>
+          <li><a href="tel:+33695995341">06 95 99 53 41</a></li>
+          <li>Achères 78260</li>
+        </ul>
+      </div>
+
+      <!-- ---- Corps du CV : 2 colonnes (infos à gauche, expériences à droite) ---- -->
+      <div class="cv-corps">
+
+        <!-- ===== Colonne de gauche ===== -->
+        <div class="cv-colonne">
+
+          <div class="cv-carte">
+            <h3>Formations</h3>
+            <ul class="cv-chronologie">
+              <li class="cv-element">
+                <p class="cv-poste">BTS SIO</p>
+                <p class="cv-lieu">Schola nova</p>
+                <p class="cv-date">09/2025 – 06/2027</p>
+              </li>
+              <li class="cv-element">
+                <p class="cv-poste">Centralisez et sécurisez votre annuaire Active Directory</p>
+                <p class="cv-lieu">OpenClassrooms</p>
+              </li>
+              <li class="cv-element">
+                <p class="cv-poste">Assurez la sécurité de votre Active Directory et de vos domaines Windows</p>
+                <p class="cv-lieu">OpenClassrooms</p>
+              </li>
+              <li class="cv-element">
+                <p class="cv-poste">BTS MCO (alternance)</p>
+                <p class="cv-lieu">Sup de Vente · 78100</p>
+              </li>
+              <li class="cv-element">
+                <p class="cv-poste">Baccalauréat ST2S</p>
+                <p class="cv-lieu">Lycée Louise Weiss · 78260</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="cv-carte">
+            <h3>Langues</h3>
+            <ul class="cv-niveaux">
+              <li><span>Français</span></li>
+              <li><span>Anglais</span><span class="cv-niveau">B1</span></li>
+              <li><span>Espagnol</span><span class="cv-niveau">B1</span></li>
+            </ul>
+          </div>
+
+          <div class="cv-carte">
+            <h3>Compétences</h3>
+            <ul class="cv-pastilles">
+              <li>Word</li>
+              <li>PowerPoint</li>
+              <li>Outils informatiques</li>
+            </ul>
+          </div>
+
+          <div class="cv-carte">
+            <h3>Intérêts</h3>
+            <ul class="cv-taches">
+              <li>Gestion et développement d'un serveur de jeux vidéo</li>
+              <li>E-sport et mangas</li>
+              <li>Développement informatique (JavaScript, Python)</li>
+              <li>Pratique régulière du rugby et du skateboard</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- ===== Colonne de droite : expériences ===== -->
+        <div class="cv-colonne">
+          <div class="cv-carte">
+            <h3>Expériences professionnelles</h3>
+            <ul class="cv-chronologie">
+
+              <li class="cv-element">
+                <p class="cv-poste">Technicien informatique</p>
+                <p class="cv-lieu">Ministère des armées</p>
+                <p class="cv-date">09/2025</p>
+                <ul class="cv-taches">
+                  <li>Ticketing</li>
+                  <li>Gestion d'appel avec les hautes autorités</li>
+                  <li>Gestion de problème informatique pour la ministre et son bureau</li>
+                </ul>
+              </li>
+
+              <li class="cv-element">
+                <p class="cv-poste">Opérateur logistique</p>
+                <p class="cv-lieu">Faculté Sorbonne médecine</p>
+                <p class="cv-date">08/2022 – 08/2024</p>
+                <ul class="cv-taches">
+                  <li>Création d'évènements dans le cadre de congrès de médecine</li>
+                  <li>Résolution des problèmes informatiques dans l'urgence</li>
+                  <li>Gestion audio-visuel des amphithéâtres</li>
+                </ul>
+              </li>
+
+              <li class="cv-element">
+                <p class="cv-poste">Vendeur et responsable</p>
+                <p class="cv-lieu">Récré'Action</p>
+                <p class="cv-date">05/2022 – 07/2023</p>
+                <ul class="cv-taches">
+                  <li>Vendeur et responsable du magasin</li>
+                  <li>Diagnostic des besoins des clients</li>
+                  <li>Formation des vendeurs</li>
+                  <li>Réalisation du site web</li>
+                </ul>
+              </li>
+
+              <li class="cv-element">
+                <p class="cv-poste">Manutentionnaire</p>
+                <p class="cv-lieu">Leclerc Drive</p>
+                <p class="cv-date">04/2020 – 05/2020</p>
+                <ul class="cv-taches">
+                  <li>Préparation des commandes clients</li>
+                  <li>Organisation de la gestion des commandes</li>
+                </ul>
+              </li>
+
+              <li class="cv-element">
+                <p class="cv-poste">Opérateur logistique et sécurité</p>
+                <p class="cv-lieu">Centre des finances publiques</p>
+                <ul class="cv-taches">
+                  <li>Surveiller l'infrastructure publique 24h/24, effectuer des rondes de prévention et de détection de risques</li>
+                  <li>Contrôler la conformité d'entrée et de sortie de personnes et de biens, vérifier les accès</li>
+                  <li>Repérer les anomalies et incidents afin d'en informer les forces de l'ordre</li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="presentation-entreprise" class="vue page-outil page-texte">
+    <h1>Entreprise</h1>
+
+    <div class="carte-texte">
+
+      <p>
+        Le Commissariat au Numérique de Défense (CND) est l'opérateur numérique unique
+        et service central du Ministère des Armées, créé le 1er septembre 2025.
+      </p>
+
+      <h2>Missions et rôle</h2>
+      <ul>
+        <li>
+          <strong>Unification :</strong> Il regroupe et mutualise les anciennes structures
+          numériques (comme la DIRISI, la DGNUM et l'AND) pour simplifier la gouvernance.
+        </li>
+        <li>
+          <strong>Souveraineté opérationnelle :</strong> Il garantit la performance, la résilience,
+          l'interopérabilité et la sécurité des systèmes d'information, des télécommunications
+          et du cloud de la défense.
+        </li>
+        <li>
+          <strong>COMNUMIA :</strong> Il intègre le Commandement Numérique Interarmées (COMNUMIA),
+          garant des transmissions stratégiques (notamment de la dissuasion) et du soutien
+          numérique aux opérations militaires.
+        </li>
+      </ul>
+
+      <h2>Organisation et direction</h2>
+      <ul>
+        <li>
+          <strong>Autorité :</strong> Placé directement sous l'autorité du ministre des Armées.
+        </li>
+        <li>
+          <strong>Commissaire :</strong> Général de corps d'armée Erwan Rolland
+          (assisté de son adjoint Lionel Morin).
+        </li>
+        <li>
+          <strong>Effectifs :</strong> Environ 7 000 agents (civils et militaires).
+        </li>
+      </ul>
+
+    </div>
+
+    <!-- ---- Arborescence (regroupée avec Entreprise) ---- -->
+    <div class="carte-texte">
+      <h2>Arborescence</h2>
+      <p>Le contenu de ce bloc arrivera ici.</p>
+    </div>
+  </section>
+
+  <section id="presentation-ecole" class="vue page-outil">
+    <h1>Schola Nova</h1>
+    <p>Schola Nova, accompagne chaque élève dans la recherche d’alternance. Entre ateliers CV, préparation aux entretiens et développement des soft skills, nous aidons nos jeunes à décrocher un contrat et à préparer leur avenir professionnel.</p>
+  </section>
+
+
+  <section id="presentation-certifications" class="vue page-outil">
+    <h1>Certifications</h1>
+
+    <h2>NDG Linux / CCNA / CNIL / ANSSI</h2>
+    <p>Le contenu de ce bloc arrivera ici.</p>
+
+    <h2>Autres : Azure, AWS...</h2>
+    <p>Le contenu de ce bloc arrivera ici.</p>
+
+    <h2>Badges des sociétés certifiantes</h2>
+    <p>Le contenu de ce bloc arrivera ici.</p>
+  </section>
+
+  <!-- ======== MA MISSION ======== -->
+  <section id="ma-mission" class="vue page-outil">
+    <h1>Ma mission</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <!-- ======== ÉPREUVES ======== -->
+
+  <section id="epreuve-e5" class="vue page-outil">
+    <h1>E5 — Tableau de synthèse</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="epreuve-e6-reseau" class="vue page-outil">
+    <h1>E6 — Fiche de situation 1 : Réseau</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="epreuve-e6-systeme" class="vue page-outil">
+    <h1>E6 — Fiche de situation 2 : Système</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <!-- ======== ATELIER PRO ======== -->
+
+  <section id="atelier-a1-ad" class="vue page-outil">
+    <h1>A1 — Projet AD</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="atelier-a2-glpi" class="vue page-outil">
+    <h1>A2 — Projet GLPI</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="atelier-a3-cyber" class="vue page-outil">
+    <h1>A3 — Projet Cyber</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <section id="atelier-a4-cisco" class="vue page-outil">
+    <h1>A4 — Projet Cisco</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <!-- ======== OUTILS (idée de Raphaël) ======== -->
+
+  <section id="outil-active-directory" class="vue page-outil">
+    <h1>Active Directory</h1>
+    <p>
+      Ta présentation d'Active Directory ira ici : à quoi ça sert,
+      ce que tu en fais au quotidien, ton niveau de maîtrise, etc.
+    </p>
+  </section>
+
+  <section id="outil-mecm" class="vue page-outil">
+    <h1>MECM</h1>
+    <p>
+      Ta présentation de MECM ira ici : à quoi ça sert,
+      ce que tu en fais au quotidien, ton niveau de maîtrise, etc.
+    </p>
+  </section>
+
+  <section id="outil-mcm" class="vue page-outil">
+    <h1>MCM</h1>
+    <p>
+      Ta présentation de MCM ira ici : à quoi ça sert,
+      ce que tu en fais au quotidien, ton niveau de maîtrise, etc.
+    </p>
+  </section>
+
+  <!-- ======== VEILLE TECHNOLOGIQUE / JURIDIQUE ======== -->
+
+  <section id="veille-cybersecurite" class="vue page-outil">
+    <h1>Veille : Cybersécurité</h1>
+    <p>Le contenu de cette section arrivera ici.</p>
+  </section>
+
+  <!-- ======== CONTACT ======== -->
+  <section id="contact" class="vue page-outil page-texte">
+    <h1>Contact</h1>
+
+    <div class="carte-texte">
+      <p>
+        Une question, une proposition ? Remplis le formulaire ci-dessous :
+        ton message m'arrive directement par e-mail.
+      </p>
+
+      <!-- L'envoi est géré par script.js (section "FORMULAIRE DE CONTACT") -->
+      <form id="formulaire-contact" class="formulaire">
+
+        <label for="contact-email">Adresse e-mail de l'expéditeur</label>
+        <input type="email" id="contact-email" name="email"
+               placeholder="ton.adresse@exemple.fr" required />
+
+        <label for="contact-sujet">Sujet</label>
+        <input type="text" id="contact-sujet" name="sujet"
+               placeholder="L'objet de ton message" required />
+
+        <label for="contact-message">Contenu</label>
+        <textarea id="contact-message" name="message" rows="7"
+                  placeholder="Écris ton message ici..." required></textarea>
+
+        <!-- Champ piège anti-spam : invisible pour les humains, rempli par les robots -->
+        <input type="text" name="_honey" class="champ-cache" tabindex="-1" autocomplete="off" />
+
+        <button type="submit" class="bouton-envoyer">Envoyer le message</button>
+
+        <!-- Message de confirmation ou d'erreur après l'envoi -->
+        <p id="contact-statut" class="statut" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Le fichier JS est chargé à la fin pour ne pas bloquer l'affichage de la page -->
+  <script src="script.js"></script>
+</body>
+</html>
