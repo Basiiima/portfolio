@@ -1,0 +1,736 @@
+/* =========================================================
+   VARIABLES DE COULEURS
+   On définit les couleurs du drapeau français ici, en un
+   seul endroit, pour pouvoir les réutiliser ou les ajuster
+   facilement plus tard dans tout le site.
+   ========================================================= */
+:root {
+  --bleu-france: #0055a4;
+  --blanc-france: #ffffff;
+  --rouge-france: #ef4135;
+
+  --texte-principal: #1a1a1a;
+  --texte-clair: #ffffff;
+}
+
+/* =========================================================
+   DÉFILEMENT FLUIDE
+   Quand on clique sur un lien du menu (ex: "Active Directory"),
+   la page glisse en douceur vers la section au lieu de sauter
+   directement dessus.
+   ========================================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================================================
+   RESET DE BASE
+   Supprime les marges/paddings par défaut du navigateur
+   pour partir sur une base propre et prévisible.
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: var(--texte-principal);
+  min-height: 100vh;
+
+  /* =========================================================
+     ARRIÈRE-PLAN "TECH SOMBRE" (bleu → rouge, horizontal)
+     Composé de 2 couches superposées (la première listée est
+     au-dessus) :
+     1. Deux halos de lumière radiale (bleu à gauche, rouge à
+        droite) pour l'effet de lueur.
+     2. Un dégradé horizontal sombre en fond, du bleu marine
+        au rouge foncé, avec du noir presque pur au centre.
+     ========================================================= */
+  background-image:
+    /* Couche 1 : halo bleu à gauche */
+    radial-gradient(circle at 15% 50%, rgba(0, 85, 164, 0.55) 0%, transparent 55%),
+    /* Couche 1 : halo rouge à droite */
+    radial-gradient(circle at 85% 50%, rgba(239, 65, 53, 0.5) 0%, transparent 55%),
+    /* Couche 2 : dégradé de fond, sombre, bleu → noir → rouge */
+    linear-gradient(90deg, #01192f 0%, #0a0a0a 50%, #2b0805 100%);
+
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed; /* le fond reste fixe pendant le défilement */
+}
+
+/* =========================================================
+   FILIGRANE "CND"
+   Grand texte fixe, centré, très discret (opacité faible),
+   placé derrière tout le reste du contenu grâce au z-index
+   négatif. Il ne bloque jamais les clics grâce à
+   pointer-events: none.
+   ========================================================= */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+
+  font-size: 28vw;         /* taille relative à la largeur de l'écran */
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.06); /* très transparent, discret */
+
+  white-space: nowrap;
+  pointer-events: none;    /* n'empêche pas de cliquer sur le contenu */
+  user-select: none;       /* ne peut pas être sélectionné avec la souris */
+}
+
+/* =========================================================
+   EN-TÊTE / NAVIGATION
+   Le logo est positionné en absolu à gauche, ce qui permet
+   au menu (nav) d'être parfaitement centré dans l'en-tête,
+   indépendamment de la largeur du logo.
+   ========================================================= */
+.site-header {
+  position: relative;
+  z-index: 100; /* place l'en-tête (et ses menus déroulants) AU-DESSUS du contenu de la page */
+  display: flex;
+  justify-content: center; /* centre le menu horizontalement */
+  align-items: center;
+  padding: 1.5rem 3rem;
+}
+
+.logo {
+  position: absolute;
+  left: 3rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--texte-clair);
+}
+
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   VUES DE LA PAGE
+   Une seule vue est visible à la fois : le script.js ajoute
+   ou retire la classe "vue-active" selon le lien cliqué.
+   ========================================================= */
+.vue {
+  display: none;
+}
+
+.vue.vue-active {
+  display: flex; /* .hero et .page-outil sont toutes les deux en colonne flex centrée */
+}
+
+/* =========================================================
+   PAGE DE PRÉSENTATION D'UN OUTIL
+   (Active Directory, MECM, MCM...)
+   ========================================================= */
+.page-outil {
+  max-width: 800px;
+  min-height: 70vh;      /* occupe une bonne partie de l'écran */
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  color: var(--texte-clair);
+  text-align: center;
+
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-outil h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.page-outil p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 1.75rem;
+}
+
+.nav-menu a,
+.nav-titre {
+  color: var(--texte-clair);
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.nav-menu a:hover,
+.nav-titre:hover {
+  text-decoration: underline;
+}
+
+/* Chaque entrée de menu : "position: relative" sert de
+   repère pour positionner son sous-menu juste en dessous. */
+.nav-item {
+  position: relative;
+}
+
+/* ---- Menu déroulant (1er niveau) : caché par défaut ---- */
+.nav-dropdown {
+  list-style: none;
+  position: absolute;
+  top: 100%;              /* juste en dessous du lien parent */
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  min-width: 200px;
+
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* Le sous-menu apparaît quand on survole son parent direct */
+.nav-item:hover > .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown li {
+  padding: 0.6rem 1.5rem;
+  white-space: nowrap;
+}
+
+.nav-dropdown > li:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Les liens des menus déroulants occupent toute la ligne :
+   on peut cliquer n'importe où sur la ligne, pas seulement sur le texte. */
+.nav-dropdown > li > a {
+  display: block;
+  margin: -0.6rem -1.5rem;
+  padding: 0.6rem 1.5rem;
+}
+
+/* Petite flèche pour repérer les entrées qui ouvrent un menu au survol */
+span.nav-titre::after {
+  content: " ▾";
+  font-size: 0.8em;
+}
+
+/* ---- Sous-menu imbriqué (2e niveau) -----
+   Contrairement au 1er niveau (centré, ouvert vers le bas),
+   celui-ci s'ouvre sur le côté droit de sa catégorie, comme
+   un menu en cascade classique. */
+.nav-dropdown--sous {
+  top: 0;
+  left: 100%;
+  transform: translateX(-8px);
+}
+
+.nav-item:hover > .nav-dropdown--sous {
+  transform: translateX(0);
+}
+
+/* =========================================================
+   SECTION ACCUEIL (HERO)
+   Centrée verticalement et horizontalement, texte en blanc
+   avec une légère ombre pour rester lisible sur le dégradé.
+   ========================================================= */
+.hero {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  color: var(--texte-clair);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin-bottom: 1rem;
+}
+
+.hero .highlight {
+  color: var(--texte-clair);
+  border-bottom: 3px solid var(--texte-clair);
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--texte-clair);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================================
+   ADAPTATION MOBILE
+   ========================================================= */
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .logo {
+    position: static; /* redevient un bloc normal, empilé au-dessus du menu */
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  /* Sur mobile, il n'y a pas de survol (pas de souris) :
+     les menus déroulants restent donc affichés en permanence,
+     empilés, pour rester accessibles au toucher. */
+  .nav-dropdown,
+  .nav-dropdown--sous {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    border: none;
+    margin-left: 1rem;
+  }
+}
+
+/* =========================================================
+   SOUS-TITRES DANS UNE PAGE (ex : blocs de la vue Certifications)
+   ========================================================= */
+.page-outil h2 {
+  font-size: 1.4rem;
+  margin: 2rem 0 0.75rem;
+}
+
+/* =========================================================
+   ADAPTATION ÉCRANS MOYENS
+   Le menu compte maintenant 8 entrées : en dessous de 1100px
+   de large, le logo passe au-dessus du menu pour éviter
+   qu'ils se chevauchent.
+   ========================================================= */
+@media (max-width: 1100px) {
+  .site-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .logo {
+    position: static;
+  }
+}
+
+/* =========================================================
+   PAGE "MON CV"
+   Même langage visuel que le reste du site : cartes
+   translucides sur fond sombre, avec des accents bleu,
+   blanc et rouge (couleurs du drapeau) en dégradé.
+   ========================================================= */
+.page-cv {
+  max-width: 1100px;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.page-cv > h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cv {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---- Carte : bloc translucide qui regroupe une rubrique ---- */
+.cv-carte {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+/* ---- En-tête : nom + contact ---- */
+.cv-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Barre tricolore (bleu → blanc → rouge) sur le bord gauche de l'en-tête */
+.cv-entete::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--bleu-france), var(--blanc-france), var(--rouge-france));
+}
+
+.page-cv .cv-nom {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.page-cv .cv-titre {
+  margin-top: 0.25rem;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+.cv-contact {
+  list-style: none;
+  text-align: right;
+  line-height: 1.7;
+}
+
+.cv-contact a {
+  color: var(--texte-clair);
+  text-decoration: none;
+}
+
+.cv-contact a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Corps : 2 colonnes (infos à gauche, expériences à droite) ---- */
+.cv-corps {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.cv-colonne {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---- Titre de rubrique, souligné d'un trait tricolore ---- */
+.cv-carte h3 {
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--bleu-france), var(--blanc-france), var(--rouge-france)) 1;
+}
+
+/* ---- Frise (formations et expériences) : ligne bleu → rouge ---- */
+.cv-chronologie {
+  position: relative;
+  list-style: none;
+  padding-left: 1.25rem;
+}
+
+.cv-chronologie::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: 4px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--bleu-france), var(--rouge-france));
+}
+
+.cv-element {
+  position: relative;
+  padding-bottom: 1.4rem;
+}
+
+.cv-element:last-child {
+  padding-bottom: 0;
+}
+
+/* Petit point sur la frise, pour chaque élément */
+.cv-element::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: -1.25rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blanc-france);
+}
+
+.page-cv .cv-poste {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  opacity: 1;
+}
+
+.page-cv .cv-lieu {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.page-cv .cv-date {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+/* ---- Listes de missions / intérêts ---- */
+.cv-taches {
+  list-style: disc;
+  margin-top: 0.6rem;
+  padding-left: 1.1rem;
+}
+
+.cv-taches li {
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* ---- Langues : nom à gauche, niveau à droite ---- */
+.cv-niveaux {
+  list-style: none;
+}
+
+.cv-niveaux li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+}
+
+.cv-niveau {
+  opacity: 0.7;
+}
+
+/* ---- Compétences : pastilles ---- */
+.cv-pastilles {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cv-pastilles li {
+  padding: 0.3rem 0.9rem;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+/* ---- Adaptation tablette / mobile : une seule colonne ---- */
+@media (max-width: 800px) {
+  .cv-corps {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-contact {
+    text-align: left;
+  }
+
+  .cv-carte {
+    padding: 1.25rem 1.25rem;
+  }
+}
+
+/* =========================================================
+   PAGE DE TEXTE (ex : Entreprise)
+   Une grande carte translucide, comme dans la page "Mon CV",
+   avec des titres soulignés d'un trait tricolore.
+   ========================================================= */
+.page-texte {
+  max-width: 900px;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.page-texte > h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.carte-texte {
+  padding: 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.carte-texte p,
+.carte-texte li {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+.carte-texte h2 {
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--bleu-france), var(--blanc-france), var(--rouge-france)) 1;
+}
+
+.carte-texte ul {
+  padding-left: 1.25rem;
+}
+
+.carte-texte li {
+  margin-bottom: 0.75rem;
+}
+
+.carte-texte strong {
+  opacity: 1;
+}
+
+@media (max-width: 800px) {
+  .carte-texte {
+    padding: 1.25rem;
+  }
+}
+
+/* =========================================================
+   BOUTON "TÉLÉCHARGER MON CV"
+   Dégradé bleu → rouge (couleurs du drapeau), comme les
+   accents du reste du site.
+   ========================================================= */
+.cv-actions {
+  margin: -1rem 0 2rem;
+  text-align: center;
+}
+
+.bouton-telecharger {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  color: var(--texte-clair);
+  font-weight: 600;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--bleu-france), var(--rouge-france));
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.bouton-telecharger:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+/* Deux cartes de texte l'une sous l'autre (ex : Entreprise + Arborescence) */
+.carte-texte + .carte-texte {
+  margin-top: 1.5rem;
+}
+
+.carte-texte > h2:first-child {
+  margin-top: 0;
+}
+
+/* =========================================================
+   FORMULAIRE DE CONTACT
+   Champs translucides, dans le style des cartes du site.
+   ========================================================= */
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.formulaire label {
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.formulaire input,
+.formulaire textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  color: var(--texte-clair);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+}
+
+.formulaire textarea {
+  resize: vertical;
+}
+
+.formulaire input::placeholder,
+.formulaire textarea::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.formulaire input:focus,
+.formulaire textarea:focus {
+  outline: none;
+  border-color: var(--blanc-france);
+  box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.6);
+}
+
+/* Champ anti-spam : sorti de l'écran, invisible pour les visiteurs */
+.champ-cache {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Bouton d'envoi : même style que le bouton "Télécharger mon CV" */
+.bouton-envoyer {
+  align-self: flex-start;
+  margin-top: 1.25rem;
+  padding: 0.8rem 1.8rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--texte-clair);
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--bleu-france), var(--rouge-france));
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.bouton-envoyer:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+.bouton-envoyer:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
+/* Message affiché après l'envoi */
+.statut {
+  min-height: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.statut--ok {
+  color: #7ee2a8;
+}
+
+.statut--erreur {
+  color: #ff8a80;
+}
